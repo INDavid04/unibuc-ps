@@ -174,6 +174,42 @@ cBA / cA
 # 4. Jocul de loto #
 ####################
 
+# Cerinta Exercitiul 4.1: Construiti in R o functie care sa simuleze jocul de loto 6/49. Acest joc consista din extragerea aleatoare a 6 numere dintr-o urna cu 49 de numere posibile, fara intoarcere. Fiecare extragere se face de maniera uniforma din numerele ramase in urna (la a i-a extragere, fiecare bila din urna are aceeasi sansa sa fie extrasa). De exemplu, putem avea urmatorul rezultat: 10, 27, 3, 45, 12, 24.
+
+# Nota Exercitiul 4.1: Functia sample() poate face aceasta operatie, ceea ce se cere este de a crea voi o functie care sa implementeze jocul fara a folosi functia sample. Bineinteles ca puteti folosi functii precum: runif, floor, choose, etc
+
+# Incepem prin a construi o functie care ne permite generarea unei variabile aleatoare uniform repartizate pe multimea {1, ..., n} (aceasta functie este cea care simuleaza procesul de extragere de la fiecare pas)
+
+# Returneaza un numar din [1, n]
+myintunif <- function(n) {
+  r <- n * runif(1)
+  u <- floor(r) + 1
+  return(u)
+}
+
+# Testeaza functia myintunif
+# res <- myintunif(10)
+# res
+
+# Returneaza extragerea fara intoarcere a k numere aleatoare din n
+myrandsample <- function(n, k) {
+  x <- 1:n
+  q <- rep(0, k)
+  
+  for (i in 1:k) {
+    l <- length(x)
+    u <- myintunif(l)
+    q[i] <- x[u]
+    x <- x[x != q[i]]
+  }
+  return(q)
+}
+
+# Testeaza functia myrandexample
+n <- 49
+k <- 6
+myrandsample(n, k)
+
 ##############################################
 # Aside: Lista exercitii generata de chatgpt #
 ##############################################
