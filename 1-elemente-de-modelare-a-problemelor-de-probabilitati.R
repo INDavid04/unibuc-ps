@@ -210,6 +210,44 @@ n <- 49
 k <- 6
 myrandsample(n, k)
 
+# Cerinta Exercitiul 4.2: Sa presupunem acum ca la extragerea loto de duminica seara au fost alese numerele 31, 7, 17, 15, 10, 42 si ca toti cei 10^5 locuitori ai unui orasel si-au cumparat un bilet. Care este probabilitatea ca o persoana care poate completa o singura grila sa piarda? (O persoana pierde daca a nimerit cel mult doua numere din cele extrase). Comparati rezultatul teoretic cu cel empiric
+
+# Rezultatul teoretic (incercarea mea)
+# Notam: A evenimentul ca o persoana sa piarda
+# P(A) = (Combinari de 49 luate cate 6 - 1 + Combinari de 49 luate cate 5 - 1 + Combinari de 49 luate cate 4 - 1) / (Combinari de 49 luate cate 6) = (49*48*47*46*45*44 + 49*48*47*46*45 + 49*48*47*46 - 3) / (49*48*47*46*45*44) = 1 + 44 + 45*44 - 3/49*48*47*46*45*44 = 45 + 1800 + 180 - 1/49*16*47*46*45*44 = 1845 + 180 - 1/3356115840 = 2025 - 1/3356115840 = 
+
+# Rezultatul teoretic (de pe site): 0.9813625
+
+# Returneaza un numar din [1, n]
+myintunif <- function(n) {
+  r <- n * runif(1)
+  u <- floor(r) + 1
+  return(u)
+}
+
+# Returneaza extragerea fara intoarcere a k numere aleatoare din n
+myrandsample <- function(n, k) {
+  x <- 1:n
+  q <- rep(0, k)
+  
+  for (i in 1:k) {
+    l <- length(x)
+    u <- myintunif(l)
+    q[i] <- x[u]
+    x <- x[x != q[i]]
+  }
+  return(q)
+}
+
+# Rezultatul empiric
+a <- c(31, 7, 17, 15, 10, 42)
+n <- 10^5
+u <- replicate(n, sum(myrandsample(49, 6) %in% a))
+res <- table(u)/n
+
+# Probabilitate empirica de pierdere
+sum(res[c("0", "1","2")])
+
 ##############################################
 # Aside: Lista exercitii generata de chatgpt #
 ##############################################
