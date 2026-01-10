@@ -21,6 +21,12 @@ pC <- 0.25 # # evenimentul ca valoarea acţiunilor X, Y să crească ziua următ
 # Genereaza A
 A <- runif(n) < pA
 
+# Vezi ce afiseaza p_a si a
+n <- 10
+p_a <- 0.10
+a <- runif(n) < p_a
+cat("p_a: ", p_a, "\na: ", a, "\n")
+
 # Genereaza B | A
 p_B_conditionat_de_A <- pC / pA
 p_B_neconditionat_de_A <- (pB - pC) / (1 - pA)
